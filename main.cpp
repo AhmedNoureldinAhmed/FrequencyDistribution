@@ -1,8 +1,8 @@
 #include <iostream>
 #include<vector>
-#include<algorithm>
-#include<cmath>
-#include<iomanip>
+#include<algorithm> //log10()
+#include<cmath>     //Max,Min in Vector
+#include<iomanip>   //setw()
 
 using namespace std;
 
@@ -22,76 +22,74 @@ int main()
     26 ,25 ,33 ,35 ,35 ,28
     }
 ,_lower,_upper;
-  double _max{},_min{};
-  // Max , Min Library Algorithm
-  const auto [min, max] = minmax_element(begin(_data), end(_data));
-    _max = *min ; _min = *min ;
+double _max{},_min{},_sum{};
 
-  // Calculate Range
- const double _range{*max - *min };
-
- // Sturges rule Range
- const size_t _n{_data.size()}; //Number of Data
- const double _k{ round(1 + (3.322 *(log10(_n))))}; // Sturges + Round Up Result
- const double _classW{ceil(_range / _k)};
+ // ==============  Sturges rule  ============== //
+ const size_t _n{_data.size()}; //Number of Data in Vector
+ const double _k{ round(1 + (3.322 *(log10(_n))))}; // Sturges Formula + Round Up Result
+ const auto [min, max] = minmax_element(begin(_data), end(_data)); _max = *min ;_min = *min;//Max&Min in Vector
+ const double _range{*max - *min }; // Calculate Range
+ const double _classW{ceil(_range / _k)};// Calculate Class Width
  //double _classW{round(_range / 6)} // Another Method ;
 
 
- ///////////// Print //////////////////
-    cout<<"-----------"<<endl;
-    cout<<"Class Limit "<<endl;
-    cout<<"-----------"<<endl;
-    for(size_t i=0; i <_k;i++){
+// ============== Table Header ============== //
+    cout<<"-------------------------"<<endl;
+    cout<<"Class Limit "<<setw(12)<<"Frequency"<<endl;
+    cout<<"-------------------------"<<endl;
 
-    if( i==0 )
+// ============== Assigned Class Limit ============== //
+    for(size_t i=0; i <_k;i++)
     {
+        if( i==0 )
+        {
          _lower.push_back(*min);
          _upper.push_back(*min + (_classW -1) );
-    }
-
+        }
         // Assigned Value
     _min+=_classW ; //
     _max =_min + (_classW -1) ;
     _lower.push_back(_min);
     _upper.push_back(_max);
-
-
-    cout<<"|"<<setw(4)<<_lower[i]<<"-"<<_upper[i]<<setw(3)<<"|"<<endl;
  }
- ///////////// Print //////////////////
 
- //Counter
 
+// ============== Counter ============== //
 vector<double>_count(_k);
 
-cout<< _k<<endl;
-
-     for(size_t i=0; i <_data.size();i++)
+    for(size_t i=0; i <_data.size();i++)
     {
-
-        for (size_t j=0 ; j <_k;j++)
+        for (size_t j=0 ; j < _k ;j++)
         {
-             if (_data[i] < _upper[j] && data[i] < _lower[j])
+            if( _data[i] >= _lower[j] &&  _data[i] <= _upper[j]  )
             {
-            _count[i]++;
-             cout<<"count "<<i<<" " <<_count[i]<<endl; //"Data " <<_data[i] <<
+              _count[j] += 1;
             }
-            if(j<=_k)
-            {
-                break;
-            }
+
         }
      }
+    for(size_t i=0 ; i<_count.size();i++)
+        _sum+=_count[i];
+
+// ============== Print ============== //
+    for (size_t i=0 ; i < _count.size();i++)
+    {
+    cout<<"|"<<setw(4)
+    <<_lower[i]<<"-"<<_upper[i]
+    <<setw(3)<<"|"<<setw(10)
+    <<_count[i]
+    <<setw(4)<<"|"<<endl;
+    }
+ cout<<"-------------------------"<<endl;
+     cout<<setw(9)<<" Total "<<
+     setw(2)<<"|"<<
+     setw(10)<<_sum<<
+     setw(4)<<"|"<<endl;
+ cout<<"-------------------------"<<endl;
+
+// ============== Print ============== //
 
 
-            /*
-       for (size_t j=0 ; j < _count.size();j++)
-        {
-
-            cout<<_count[j]<<endl;
-
-
-        }*/
     return 0;
 
 }
