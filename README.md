@@ -8,6 +8,7 @@
 hint : separate data by semicolon
 - You See Data in Output File After Program Execute 
 (output.txt) File 
+- You See Data Also in Commend Window
 
 # Note : 
 The Data is Not Deleted After Every Execute 
