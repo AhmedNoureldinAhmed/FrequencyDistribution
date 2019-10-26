@@ -1,14 +1,14 @@
 # FrequencyDistribution 
 
 - This Program To Design Frequency Table 
-- Show in Commend Window And in txtFile 
+- Show in Command Window And in txtFile 
 
 # Explain
 - You Put Data in input.txt File
 hint : separate data by semicolon
 - You See Data in Output File After Program Execute 
 (output.txt) File 
-- You See Data Also in Commend Window
+- You See Data Also in Command Window
 
 # Note : 
 The Data is Not Deleted After Every Execute 
